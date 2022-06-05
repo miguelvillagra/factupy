@@ -6,6 +6,7 @@ def main():
 	#controlador.agregar_nuevo_producto()
 	#controlador.menu_bienvenida()
 	controlador.menu_principal()
+	#prueba
 
 
 main()
