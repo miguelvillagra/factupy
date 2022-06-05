@@ -7,6 +7,7 @@ def main():
 	#controlador.menu_bienvenida()
 	controlador.menu_principal()
 	#prueba
+	#prueba2
 
 
 main()
