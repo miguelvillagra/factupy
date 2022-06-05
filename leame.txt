@@ -1,0 +1,9 @@
+
+
+
+Para ejecutar el programa, es necesario tener python3.
+
+Luego hay que dirigirse donde se encuentre el archivo appMiguel.py desde la consola
+
+e introducir el siguiente comando: Python3 appMiguel.py
+
