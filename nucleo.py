@@ -4,6 +4,7 @@ class EmpresaGastronómica:
 	def __init__(self, nombre, direccion):
 		self.nombre = nombre
 		self.dirección = direccion
+		#self.tel = tel
 		pass
 
 

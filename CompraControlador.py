@@ -124,8 +124,10 @@ class CompraControlador(object):
         total = 0
         self.clien = clien
 
+        print("\n\n\n")
         print("-------" + empresa.nombre + "-------\n")
         print("-------" + empresa.dirección + "-------\n")
+        print("\n")
 
         print("Cantidad------Producto/sabor-------Precio------- IVA Total")
 
