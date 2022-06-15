@@ -74,7 +74,7 @@ class PastelHelado (Pastel):
 		pass
 
 
-class Menú:
+class Menú:  # no esta en uso
 	def __init__(self):
 		pass
 
@@ -87,7 +87,7 @@ class Menú:
 		pass
 
 
-class SistemaFacturación:
+class SistemaFacturación:  # no esta en uso
 	'''Esta clase representa una abstracción de un sistema de facturacion'''
 
 	def __init__(self):
@@ -102,35 +102,10 @@ class SistemaFacturación:
 		pass
 
 
-class Factura:
+class Factura:  # no esta en uso
 	def __init__(self, numero, cliente):
 		self.numero = numero
 		self.cliente = cliente
-		pass
-
-
-class Cliente:
-	'''Esta clase representa una abstracción de datos del cliente'''
-
-	def __init__(self, cedula, nombre, direccion):
-		self.cedula = cedula
-		self.nombre = nombre
-		self.direccion = direccion
-		pass
-
-
-class SistemaFacturación:
-	'''Esta clase representa una abstracción de un sistema de facturacion'''
-
-	def __init__(self):
-		pass
-
-	def calcular_precio(self):
-		# returns
-		pass
-
-	def emitir_factura(self):
-		# returns
 		pass
 
 

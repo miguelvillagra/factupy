@@ -18,7 +18,6 @@ empresa = EmpresaGastronómica(
 
 
 class CompraControlador(object):
-    """docstring for PasajeControlador """
 
     def __init__(self):
         self.interfazPasteleria = InterfazPasteleria()
@@ -38,7 +37,7 @@ class CompraControlador(object):
             # PastelGourmet(cantidad, precio, sabor)
             pastel_gourmet = PastelGourmet(input(), input(), input())
             mi_lista.append(pastel_gourmet)
-            #print(type(mi_lista[0]).__name__)
+            # print(type(mi_lista[0]).__name__)
 
             print("\nLa cantidad de pedidos en el carrito es de: " +
                   str(len(mi_lista)))
@@ -47,21 +46,50 @@ class CompraControlador(object):
                   str(type(mi_lista[len(mi_lista)-1]).__name__))
             print("Cantidad: " + pastel_gourmet.cantidad_gourmet + "\n" +
                   "Precio: " + pastel_gourmet.precio_gourmet + "\n" +
-                  "Sabor: " + pastel_gourmet.sabor_gourmet)
+                  "Sabor: " + pastel_gourmet.sabor_gourmet + "\n")
 
         elif producto == "2":  # Faltaria implentar mas codigo para la opcion dos, pastel economico
-            opcion2 = input('''Elegiste el numero 2, pastel economico.
-				Introduzca opcion "a" para pastel pequeño o "b" para pastel mediano ''')
+            opcion2 = input(
+                "2- Pastel Economico. Introduzca opcion 'p' para pastel pequeño o 'm' para pastel mediano\n")
 
-            if (opcion2.lower()) == "a":
-                print('''Elegiste la opcion "A" de pastel economico pequeño.
-				Introduzca sabor y precio''')
-                pastel_economico_pequenho = PastelPequeño(input(), input())
+            if (opcion2.lower()) == "p":
+                pastel_economico_pequeno = PastelEconomico(
+                    PastelPequeño("frutilla", "5000"), "3")
+                mi_lista.append(pastel_economico_pequeno)
 
+                # tamanho = str(
+                #     type(pastel_economico_pequeno.tamanho_economico).__name__)
+                # print("ACA IMPRIMIMOS LA PRUEBAA : " + tamanho)
+
+                print("\nLa cantidad de pedidos en el carrito es de: " +
+                      str(len(mi_lista)))
                 print(
-                    "Se agrego un pastel al carrito con las siguientes caracteristicas:\n ")
-                print("Sabor: " + pastel_economico_pequenho.sabor_pequenho + "\n" +
-                      "Precio: " + pastel_economico_pequenho.precio_pequenho)
+                    "\nSe agrego un pastel al carrito con las siguientes caracteristicas: ")
+                print("Tipo de pastel: " +
+                      str(type(mi_lista[len(mi_lista)-1]).__name__))
+                print("Tamaño: Pastel Pequeño ")
+                print("Cantidad: " + str(pastel_economico_pequeno.cantidad_economico))
+                print(
+                    "Precio: " + str(pastel_economico_pequeno.tamanho_economico.precio_pequenho))
+                print("Sabor: " +
+                      pastel_economico_pequeno.tamanho_economico.sabor_pequenho + "\n")
+            else:
+                pastel_economico_mediano = PastelEconomico(
+                    PastelMediano("cafe", "7000"), "4")
+                mi_lista.append(pastel_economico_mediano)
+
+                print("\nLa cantidad de pedidos en el carrito es de: " +
+                      str(len(mi_lista)))
+                print(
+                    "\nSe agrego un pastel al carrito con las siguientes caracteristicas: ")
+                print("Tipo de pastel: " +
+                      str(type(mi_lista[len(mi_lista)-1]).__name__))
+                print("Tamaño: Pastel Mediano ")
+                print("Cantidad: " + str(pastel_economico_mediano.cantidad_economico))
+                print(
+                    "Precio: " + str(pastel_economico_mediano.tamanho_economico.precio_mediano))
+                print("Sabor: " +
+                      pastel_economico_mediano.tamanho_economico.sabor_mediano + "\n")
 
         elif producto == "3":
             print(
@@ -133,7 +161,7 @@ class CompraControlador(object):
         print("\n\n\n")
         print("-------" + empresa.nombre + "-------\n")
         print("-------" + empresa.dirección + "-------\n")
-        print("\n")
+        # print("\n")
 
         print("CANTIDAD------PRODUCTO/SABOR-------PRECIO------- IVA 10%------- SUBTOTAL ")
 
@@ -162,10 +190,38 @@ class CompraControlador(object):
                       "---" + str(mi_lista[x].precio_helado) +
                       "---" + str(math.floor(calculo_iva)) +
                       "---" + str(subtotal))
-                print("\n")
 
-            # elif str(type(mi_lista[x]).__name__) == "PastelHelado":
-            #     pass
+            elif str(type(mi_lista[x]).__name__) == "PastelEconomico":
+
+                # prueba = str(type(mi_lista[x].tamanho_economico).__name__)
+                # print("aca vemos si imprime pastelpequeno")
+                # print(prueba)
+
+                if str(type(mi_lista[x].tamanho_economico).__name__) == "PastelPequeño":
+
+                    calculo_iva = int(
+                        mi_lista[x].tamanho_economico.precio_pequenho)/iva
+                    subtotal = int(mi_lista[x].cantidad_economico) * \
+                        int(mi_lista[x].tamanho_economico.precio_pequenho)
+                    total += subtotal
+
+                    print(str(mi_lista[x].cantidad_economico) + "---Pastel Economico Pequeño/" + str(mi_lista[x].tamanho_economico.sabor_pequenho) +
+                          "---" + str(mi_lista[x].tamanho_economico.precio_pequenho) +
+                          "---" + str(math.floor(calculo_iva)) +
+                          "---" + str(subtotal))
+
+                else:
+                    calculo_iva = int(
+                        mi_lista[x].tamanho_economico.precio_mediano)/iva
+                    subtotal = int(mi_lista[x].cantidad_economico) * \
+                        int(mi_lista[x].tamanho_economico.precio_mediano)
+                    total += subtotal
+
+                    print(str(mi_lista[x].cantidad_economico) + "---Pastel Economico Mediano/" + str(mi_lista[x].tamanho_economico.sabor_mediano) +
+                          "---" + str(mi_lista[x].tamanho_economico.precio_mediano) +
+                          "---" + str(math.floor(calculo_iva)) +
+                          "---" + str(subtotal))
+
         print("\nDESCUENTO: \n" + "IVA 10%: " +
               str(math.floor(total/iva)) + "\nTOTAL: " + str(total) + " guaranies")
         print("\nLocalidad: Sucursal Asuncion\n" + "Cliente: " + clien.nombre + "\n" +
