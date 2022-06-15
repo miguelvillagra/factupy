@@ -139,6 +139,9 @@ class CompraControlador(object):
             print("\nGracias por usar FactuPy\n")
 
     def carga_datos_cliente(self, tipofactura):
+        #Si el usuario selecciona la opcion "s" se realiza el proceso de carga en la clase Cliente
+        #para luego mandarlo a la funcion self.relizar_factura(clientedatos) y asi imprimir
+
         self.tipofactura = tipofactura
         if tipofactura == "s":
             print(
@@ -146,7 +149,7 @@ class CompraControlador(object):
             cliente = Cliente(input(), input(), input())
             return cliente
 
-        else:
+        else:  # Se cargar los datos de forma anonima si el usuario selecciona otra opcion distinta de "s"
             cliente = Cliente(123456789, "Sin nombre", "Sin direccion")
             return cliente
 
@@ -158,6 +161,7 @@ class CompraControlador(object):
         iva_total = 0
         factura = Factura("123", clien)
 
+        #Datos de la empresa gastronomica que seran mostrados al principio de la factura
         print("\n\n\n")
         print("-------" + empresa.nombre + "-------\n")
         print("-------" + empresa.dirección + "-------\n")
@@ -217,7 +221,7 @@ class CompraControlador(object):
                           "---" + str(mi_lista[x].tamanho_economico.precio_mediano) +
                           "---" + str(math.floor(calculo_iva)) +
                           "---" + str(subtotal))
-
+        #Aca se muestra el total a pagar y datos del cliente que fueron cargados en carga_datos_cliente
         print("\nDESCUENTO: \n" + "IVA 10%: " +
               str(math.floor(total/iva)) + "\nTOTAL: " + str(total) + " guaranies")
         print("\nLocalidad: Sucursal Asuncion\n" + "Cliente: " + clien.nombre + "\n" +
