@@ -4,11 +4,12 @@ from InterfazPasteleria import InterfazPasteleria
 from nucleo import *
 import math
 
-#   Todas las opcciones funcionado correctamente
-# Agregar el ZODB y tkinter
-#
+####################################OBS#########################################
+# Para que todas las opciones de agregar productos funcionen                    #
+# es necesario que se ingresen los datos en el orden que salga en pantalla      #
+#################################################################################
 
-
+#agregar el ZODB y tkinter
 mi_lista = []  # array en donde guardamos los pedidos a realizar
 empresa = EmpresaGastronómica(
     "Ceci gross pastelería", "Mcal Lopez/José Vinuales")
@@ -27,6 +28,9 @@ class CompraControlador(object):
             lambda: print("\nSe selecciono la opcion: " + producto))
         if int(producto) > 5 or int(producto) < 1:
             print("Debe seleccionar un número entre el 1 y el 5. Intentelo de nuevo.")
+
+        #Aca valida que tipo de pedido que quiere agregar al carrito, con su sabor, precio y cantidad
+        #El carrito funciona como un array mi_lista = [] en donde van los pedidos que pueden tener diferentes cantidades de pasteles
 
         elif producto == "1":
 
@@ -129,7 +133,7 @@ class CompraControlador(object):
             quit()
 
     def menu_principal(self):
-
+        #Aca inicia el programa y luego va a agregar_nuevo_producto si el usuario seleciona la opcion de 1- Agregar productos
         choice = input(
             " Introduzca una opcion \n 1- Agregar productos \n 2- Salir \n")
 
@@ -221,7 +225,7 @@ class CompraControlador(object):
                           "---" + str(mi_lista[x].tamanho_economico.precio_mediano) +
                           "---" + str(math.floor(calculo_iva)) +
                           "---" + str(subtotal))
-        #Aca se muestra el total a pagar y datos del cliente que fueron cargados en carga_datos_cliente
+        #Aca se muestra el total a pagar y datos del cliente que fueron cargados en carga_datos_cliente1
         print("\nDESCUENTO: \n" + "IVA 10%: " +
               str(math.floor(total/iva)) + "\nTOTAL: " + str(total) + " guaranies")
         print("\nLocalidad: Sucursal Asuncion\n" + "Cliente: " + clien.nombre + "\n" +
