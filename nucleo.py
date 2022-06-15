@@ -74,7 +74,7 @@ class PastelHelado (Pastel):
 		pass
 
 
-class Menú:  # no esta en uso
+class Menú:
 	def __init__(self):
 		pass
 
@@ -87,7 +87,7 @@ class Menú:  # no esta en uso
 		pass
 
 
-class SistemaFacturación:  # no esta en uso
+class SistemaFacturación:
 	'''Esta clase representa una abstracción de un sistema de facturacion'''
 
 	def __init__(self):
@@ -102,7 +102,7 @@ class SistemaFacturación:  # no esta en uso
 		pass
 
 
-class Factura:  # no esta en uso
+class Factura:
 	def __init__(self, numero, cliente):
 		self.numero = numero
 		self.cliente = cliente
