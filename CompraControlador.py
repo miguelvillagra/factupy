@@ -4,8 +4,9 @@ from InterfazPasteleria import InterfazPasteleria
 from nucleo import *
 import math
 
-#   \
-# Arreglar y agregar el ZODB
+#   Todas las opcciones funcionado correctamente
+# Agregar el ZODB y tkinter
+#
 
 
 mi_lista = []  # array en donde guardamos los pedidos a realizar
@@ -24,7 +25,10 @@ class CompraControlador(object):
 
         self.interfazPasteleria.agregar_producto(
             lambda: print("\nSe selecciono la opcion: " + producto))
-        if producto == "1":
+        if int(producto) > 5 or int(producto) < 1:
+            print("Debe seleccionar un número entre el 1 y el 5. Intentelo de nuevo.")
+
+        elif producto == "1":
 
             print(
                 "1- Pastel Gourmet. Introduzca la cantidad, precio y sabor. En ese orden:  \n ")
@@ -125,10 +129,11 @@ class CompraControlador(object):
             quit()
 
     def menu_principal(self):
+
         choice = input(
             " Introduzca una opcion \n 1- Agregar productos \n 2- Salir \n")
 
-        while choice != "2":
+        while choice == "1":
             self.agregar_nuevo_producto()
         else:
             print("\nGracias por usar FactuPy\n")
