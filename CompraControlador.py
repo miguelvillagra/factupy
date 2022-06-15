@@ -1,16 +1,12 @@
 
-from http import client
+
 from InterfazPasteleria import InterfazPasteleria
 from nucleo import *
 import math
 
 #   \
 # Arreglar y agregar el ZODB
-# Por el momento funcionan
-#  1- Agreggar productos
-#  2- Salir
-#  Agregar productos: #  1-Pastel Gourmet #  3-Pastel Helado#  4-Finalizar compra
-# y realizar factura sin datos de cliente
+
 
 mi_lista = []  # array en donde guardamos los pedidos a realizar
 empresa = EmpresaGastronómica(
@@ -25,7 +21,6 @@ class CompraControlador(object):
     def agregar_nuevo_producto(self):
         producto = input(
             "Agregar productos: \n 1-Pastel Gourmet \n 2-Pastel Economico \n 3-Pastel Helado \n 4-Finalizar compra \n 5-Salir \n")
-        # pasteleria = Pasteleria
 
         self.interfazPasteleria.agregar_producto(
             lambda: print("\nSe selecciono la opcion: " + producto))
@@ -48,18 +43,16 @@ class CompraControlador(object):
                   "Precio: " + pastel_gourmet.precio_gourmet + "\n" +
                   "Sabor: " + pastel_gourmet.sabor_gourmet + "\n")
 
-        elif producto == "2":  # Faltaria implentar mas codigo para la opcion dos, pastel economico
+        elif producto == "2":
             opcion2 = input(
                 "2- Pastel Economico. Introduzca opcion 'p' para pastel pequeño o 'm' para pastel mediano\n")
 
             if (opcion2.lower()) == "p":
+                print(
+                    "2- Pastel economico pequeño . Introduzca sabor, precio y cantidad. En ese orden:  \n ")
                 pastel_economico_pequeno = PastelEconomico(
-                    PastelPequeño("frutilla", "5000"), "3")
+                    PastelPequeño(input(), input()), input())
                 mi_lista.append(pastel_economico_pequeno)
-
-                # tamanho = str(
-                #     type(pastel_economico_pequeno.tamanho_economico).__name__)
-                # print("ACA IMPRIMIMOS LA PRUEBAA : " + tamanho)
 
                 print("\nLa cantidad de pedidos en el carrito es de: " +
                       str(len(mi_lista)))
@@ -74,8 +67,11 @@ class CompraControlador(object):
                 print("Sabor: " +
                       pastel_economico_pequeno.tamanho_economico.sabor_pequenho + "\n")
             else:
+                print(
+                    "2- Pastel economico mediano . Introduzca sabor, precio y cantidad. En ese orden:  \n ")
+
                 pastel_economico_mediano = PastelEconomico(
-                    PastelMediano("cafe", "7000"), "4")
+                    PastelMediano(input(), input()), input())
                 mi_lista.append(pastel_economico_mediano)
 
                 print("\nLa cantidad de pedidos en el carrito es de: " +
@@ -113,17 +109,15 @@ class CompraControlador(object):
             s_n = input(
                 "Para proceder a realizar la factura, desea cargar los datos del cliente? \n S o N")
             if s_n.lower() == "s":
-                # llamar a una funcion que cargue al cliente con sus productos y sus datos tributarios
+                # llama a una funcion que cargua al cliente con sus productos y sus datos tributarios
                 clientedatos = self.carga_datos_cliente(s_n)
                 self.relizar_factura(clientedatos)
 
                 quit()
             else:
 
-                #clientedatos = self.carga_datos_cliente(s_n)
+                # llama a una funcion que imprime la factura con los datos anonimos y termina el programa
                 self.relizar_factura(self.carga_datos_cliente(s_n))
-
-                # llamar a una funcion que imprima la factura con los datos anonimos y termina el programa
                 quit()
 
         elif producto == "5":
@@ -157,11 +151,12 @@ class CompraControlador(object):
         iva = 11
         total = 0
         iva_total = 0
+        factura = Factura("123", clien)
 
         print("\n\n\n")
         print("-------" + empresa.nombre + "-------\n")
         print("-------" + empresa.dirección + "-------\n")
-        # print("\n")
+        print("\nFACTURA NRO: " + factura.numero)
 
         print("CANTIDAD------PRODUCTO/SABOR-------PRECIO------- IVA 10%------- SUBTOTAL ")
 
@@ -192,10 +187,6 @@ class CompraControlador(object):
                       "---" + str(subtotal))
 
             elif str(type(mi_lista[x]).__name__) == "PastelEconomico":
-
-                # prueba = str(type(mi_lista[x].tamanho_economico).__name__)
-                # print("aca vemos si imprime pastelpequeno")
-                # print(prueba)
 
                 if str(type(mi_lista[x].tamanho_economico).__name__) == "PastelPequeño":
 
