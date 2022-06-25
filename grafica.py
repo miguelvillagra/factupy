@@ -29,7 +29,8 @@ class SampleApp(tk.Tk):
 
 
         self.frames = {}
-        for F in (StartPage, PageOne, PageTwo, AgregarProductos, PastelGourmet, FinalizarCompra, PastelEconomico, PastelHelado ):
+        for F in (StartPage, AgregarProductos, PastelGourmet, FinalizarCompra, PastelEconomico, PastelHelado, 
+        PastelEconomicoPequeño, PastelEconomicoMediano, CargarDatosFactura, MostrarFactura):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -65,7 +66,7 @@ class StartPage(tk.Frame):
 
         controller.title('FactuPy')
         controller.state('zoomed')
-        controller.iconphoto(False, tk.PhotoImage(file='/Users/miguelvillagra/Desktop/FactuPy/factupy/file.png'))
+        controller.iconphoto(False, tk.PhotoImage(file='/Users/miguelvillagra/Desktop/proyecto/factupy/file.png'))
 
         heading_label1= tk.Label(self, text='FactuPy', font=('Helvetica',45,'bold'), foreground='#2C3639', background='#DCD7C9')
         heading_label1.pack( pady=25)
@@ -82,25 +83,14 @@ class StartPage(tk.Frame):
 
        
 
-        
-
-
-        # label = tk.Label(self, text="Bienvenido a FactuPy. \nHaga clic a una opción", font=controller.title_font)
-
-        # #label = tk.Label(self, text="Introduzca una Opcion", font=controller.subtitle_font)
-
-        # label.pack(side="top", fill="x", pady=10)
-
-        button1 = tk.Button(self, text="1- Agregar productos",
+        button1 = tk.Button(self, text="Agregar productos",
                             command=lambda: controller.show_frame("AgregarProductos"))
         button1.pack()
         
-        boton_salir = tkinter.Button(self, text ="2- Salir", command = salir)
+        boton_salir = tkinter.Button(self, text ="Salir", command = salir)
         boton_salir.pack()
 
-        # button2 = tk.Button(self, text="pagina tres prueba",
-        #                    command=lambda: controller.show_frame("PageThree"))
-        # button2.pack()
+        
 
 class AgregarProductos(tk.Frame):
 
@@ -163,8 +153,19 @@ class PastelGourmet (tk.Frame):
         )
         amount_entry_box.pack(ipady=7)
 
-        def add_amount(self):
-            pass
+        def add_amount():
+            tkinter.messagebox.showinfo( "", "Se agrego la cantidad de pasteles")
+        
+        enter_button1= tk.Button(
+            self,
+            text='Enter',
+            command=add_amount,
+            relief='raised',
+            borderwidth=3,
+            width=5,
+            height=2
+        )
+        enter_button1.pack(pady=10)
 
 
 
@@ -187,8 +188,18 @@ class PastelGourmet (tk.Frame):
         )
         price_entry_box.pack(ipady=7)
 
-        def add_price(self):
-            pass
+        def add_price():
+            tkinter.messagebox.showinfo( "", "Se agrego el precio del pastel")
+        enter_button2= tk.Button(
+            self,
+            text='Enter',
+            command=add_price,
+            relief='raised',
+            borderwidth=3,
+            width=5,
+            height=2
+        )
+        enter_button2.pack(pady=10)
         
         #Aca introduce el sabor
         flavor_label = tk.Label(self, 
@@ -209,25 +220,20 @@ class PastelGourmet (tk.Frame):
         )
         flavor_entry_box.pack(ipady=7)
 
-        def add_flavor(self):
-            pass
+        def add_flavor():
+            tkinter.messagebox.showinfo( "", "Se agrego el sabor del pastel")
 
-        
-        def done ():
-            tkinter.messagebox.showinfo( "", "Se agrego un pedido al carrito")
-            controller.show_frame("AgregarProductos")
-        #boton enter para realizar el pedido
-        enter_button= tk.Button(
+       
+        enter_button3= tk.Button(
             self,
             text='Enter',
-            #ommand=(add_amount(), add_price(), add_flavor(), done()),
-            command=done,
+            command=add_flavor,
             relief='raised',
             borderwidth=3,
-            width=22,
-            height=3
+            width=5,
+            height=2
         )
-        enter_button.pack(pady=10)
+        enter_button3.pack(pady=10)
 
 
         #Boton para volver atras
@@ -238,81 +244,544 @@ class PastelGourmet (tk.Frame):
 class PastelEconomico (tk.Frame):
 
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
+        tk.Frame.__init__(self, parent, bg='#DCD7C9')
         self.controller = controller
-        label = tk.Label(self, text="Pastel Economico", font=controller.title_font)
-        label.pack(side="top", fill="x", pady=10)
+        option_label = tk.Label(self, 
+            text="Pastel economico. \n", 
+            font=('Helvetica',20,'bold'),
+            bg='#DCD7C9',
+            foreground='#3F4E4F')
+        option_label.pack(pady=25)
 
         button1 = tk.Button(self, text="Pequeño",
-                           command=lambda: controller.show_frame("StartPage"))
+                           command=lambda: controller.show_frame("PastelEconomicoPequeño"))
         button1.pack()
         button2 = tk.Button(self, text="Mediano",
-                           command=lambda: controller.show_frame("StartPage"))
+                           command=lambda: controller.show_frame("PastelEconomicoMediano"))
         button2.pack()
 
-        button = tk.Button(self, text="Volver al inicio",
-                           command=lambda: controller.show_frame("StartPage"))
+         #Boton para volver atras
+        button = tk.Button(self, text="Atrás",
+                           command=lambda: controller.show_frame("AgregarProductos"))
         button.pack()
+
+class PastelEconomicoPequeño (tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent, bg='#DCD7C9')
+        self.controller = controller
+        option_label = tk.Label(self, 
+            text="Pastel economico pequeño. \n", 
+            font=('Helvetica',20,'bold'),
+            bg='#DCD7C9',
+            foreground='#3F4E4F')
+        option_label.pack(pady=25)
+
+        #Acá introduce la cantidad
+        amount_label = tk.Label(self, 
+            text="Introduzca la cantidad:", 
+            font=('Helvetica',20,'bold'),
+            bg='#DCD7C9',
+            foreground='#A27B5C'
+        )
+        amount_label.pack(pady=15)
+        amount= tk.IntVar()
+        amount_entry_box= tk.Entry(
+            self,
+            textvariable=amount,
+            font=('Helvetica',20,'bold'),
+            width=15
+        )
+        amount_entry_box.pack(ipady=7)
+
+        def add_amount():
+            tkinter.messagebox.showinfo( "", "Se agrego la cantidad de pasteles")
+        
+        enter_button1= tk.Button(
+            self,
+            text='Enter',
+            command=add_amount,
+            relief='raised',
+            borderwidth=3,
+            width=5,
+            height=2
+        )
+        enter_button1.pack(pady=10)
+
+
+
+        #Aca introduce el precio
+        price_label = tk.Label(self, 
+            text="Introduzca el precio:", 
+            font=('Helvetica',20,'bold'),
+            bg='#DCD7C9',
+            foreground='#A27B5C'
+        )
+        price_label.pack(pady=15)
+
+        
+        price= tk.IntVar()
+        price_entry_box= tk.Entry(
+            self,
+            textvariable=price,
+            font=('Helvetica',20,'bold'),
+            width=15
+        )
+        price_entry_box.pack(ipady=7)
+
+        def add_price():
+            tkinter.messagebox.showinfo( "", "Se agrego el precio del pastel")
+        enter_button2= tk.Button(
+            self,
+            text='Enter',
+            command=add_price,
+            relief='raised',
+            borderwidth=3,
+            width=5,
+            height=2
+        )
+        enter_button2.pack(pady=10)
+        
+        #Aca introduce el sabor
+        flavor_label = tk.Label(self, 
+            text="Introduzca el sabor:", 
+            font=('Helvetica',20,'bold'),
+            bg='#DCD7C9',
+            foreground='#A27B5C'
+        )
+        flavor_label.pack(pady=15)
+
+        
+        flavor= tk.StringVar()
+        flavor_entry_box= tk.Entry(
+            self,
+            textvariable=flavor,
+            font=('Helvetica',20,'bold'),
+            width=15
+        )
+        flavor_entry_box.pack(ipady=7)
+
+        def add_flavor():
+            tkinter.messagebox.showinfo( "", "Se agrego el sabor del pastel")
+
+       
+        enter_button3= tk.Button(
+            self,
+            text='Enter',
+            command=add_flavor,
+            relief='raised',
+            borderwidth=3,
+            width=5,
+            height=2
+        )
+        enter_button3.pack(pady=10)
+
+         #Boton para volver atras
+        button = tk.Button(self, text="Atrás",
+                           command=lambda: controller.show_frame("AgregarProductos"))
+        button.pack()
+
+class PastelEconomicoMediano (tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent, bg='#DCD7C9')
+        self.controller = controller
+        option_label = tk.Label(self, 
+            text="Pastel economico mediano. \n", 
+            font=('Helvetica',20,'bold'),
+            bg='#DCD7C9',
+            foreground='#3F4E4F')
+        option_label.pack(pady=25)
+
+        #Acá introduce la cantidad
+        amount_label = tk.Label(self, 
+            text="Introduzca la cantidad:", 
+            font=('Helvetica',20,'bold'),
+            bg='#DCD7C9',
+            foreground='#A27B5C'
+        )
+        amount_label.pack(pady=15)
+        amount= tk.IntVar()
+        amount_entry_box= tk.Entry(
+            self,
+            textvariable=amount,
+            font=('Helvetica',20,'bold'),
+            width=15
+        )
+        amount_entry_box.pack(ipady=7)
+
+        def add_amount():
+            tkinter.messagebox.showinfo( "", "Se agrego la cantidad de pasteles")
+        
+        enter_button1= tk.Button(
+            self,
+            text='Enter',
+            command=add_amount,
+            relief='raised',
+            borderwidth=3,
+            width=5,
+            height=2
+        )
+        enter_button1.pack(pady=10)
+
+
+
+        #Aca introduce el precio
+        price_label = tk.Label(self, 
+            text="Introduzca el precio:", 
+            font=('Helvetica',20,'bold'),
+            bg='#DCD7C9',
+            foreground='#A27B5C'
+        )
+        price_label.pack(pady=15)
+
+        
+        price= tk.IntVar()
+        price_entry_box= tk.Entry(
+            self,
+            textvariable=price,
+            font=('Helvetica',20,'bold'),
+            width=15
+        )
+        price_entry_box.pack(ipady=7)
+
+        def add_price():
+            tkinter.messagebox.showinfo( "", "Se agrego el precio del pastel")
+        enter_button2= tk.Button(
+            self,
+            text='Enter',
+            command=add_price,
+            relief='raised',
+            borderwidth=3,
+            width=5,
+            height=2
+        )
+        enter_button2.pack(pady=10)
+        
+        #Aca introduce el sabor
+        flavor_label = tk.Label(self, 
+            text="Introduzca el sabor:", 
+            font=('Helvetica',20,'bold'),
+            bg='#DCD7C9',
+            foreground='#A27B5C'
+        )
+        flavor_label.pack(pady=15)
+
+        
+        flavor= tk.StringVar()
+        flavor_entry_box= tk.Entry(
+            self,
+            textvariable=flavor,
+            font=('Helvetica',20,'bold'),
+            width=15
+        )
+        flavor_entry_box.pack(ipady=7)
+
+        def add_flavor():
+            tkinter.messagebox.showinfo( "", "Se agrego el sabor del pastel")
+
+       
+        enter_button3= tk.Button(
+            self,
+            text='Enter',
+            command=add_flavor,
+            relief='raised',
+            borderwidth=3,
+            width=5,
+            height=2
+        )
+        enter_button3.pack(pady=10)
+
+         #Boton para volver atras
+        button = tk.Button(self, text="Atrás",
+                           command=lambda: controller.show_frame("AgregarProductos"))
+        button.pack()
+
+        
 
 class PastelHelado (tk.Frame):
 
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
+        tk.Frame.__init__(self, parent,bg='#DCD7C9')
         self.controller = controller
-        label = tk.Label(self, text="Pastel gourmet", font=controller.title_font)
-        label.pack(side="top", fill="x", pady=10)
+        option_label = tk.Label(self, 
+            text="Pastel Helado. \n", 
+            font=('Helvetica',20,'bold'),
+            bg='#DCD7C9',
+            foreground='#3F4E4F')
+        option_label.pack(pady=25)
 
-        button = tk.Button(self, text="Volver al inicio",
-                           command=lambda: controller.show_frame("StartPage"))
+        #Acá introduce la cantidad
+        amount_label = tk.Label(self, 
+            text="Introduzca la cantidad:", 
+            font=('Helvetica',20,'bold'),
+            bg='#DCD7C9',
+            foreground='#A27B5C'
+        )
+        amount_label.pack(pady=15)
+        amount= tk.IntVar()
+        amount_entry_box= tk.Entry(
+            self,
+            textvariable=amount,
+            font=('Helvetica',20,'bold'),
+            width=15
+        )
+        amount_entry_box.pack(ipady=7)
+
+        def add_amount():
+            tkinter.messagebox.showinfo( "", "Se agrego la cantidad de pasteles")
+        
+        enter_button1= tk.Button(
+            self,
+            text='Enter',
+            command=add_amount,
+            relief='raised',
+            borderwidth=3,
+            width=5,
+            height=2
+        )
+        enter_button1.pack(pady=10)
+
+
+
+        #Aca introduce el precio
+        price_label = tk.Label(self, 
+            text="Introduzca el precio:", 
+            font=('Helvetica',20,'bold'),
+            bg='#DCD7C9',
+            foreground='#A27B5C'
+        )
+        price_label.pack(pady=15)
+
+        
+        price= tk.IntVar()
+        price_entry_box= tk.Entry(
+            self,
+            textvariable=price,
+            font=('Helvetica',20,'bold'),
+            width=15
+        )
+        price_entry_box.pack(ipady=7)
+
+        def add_price():
+            tkinter.messagebox.showinfo( "", "Se agrego el precio del pastel")
+        enter_button2= tk.Button(
+            self,
+            text='Enter',
+            command=add_price,
+            relief='raised',
+            borderwidth=3,
+            width=5,
+            height=2
+        )
+        enter_button2.pack(pady=10)
+        
+        #Aca introduce el sabor
+        flavor_label = tk.Label(self, 
+            text="Introduzca el sabor:", 
+            font=('Helvetica',20,'bold'),
+            bg='#DCD7C9',
+            foreground='#A27B5C'
+        )
+        flavor_label.pack(pady=15)
+
+        
+        flavor= tk.StringVar()
+        flavor_entry_box= tk.Entry(
+            self,
+            textvariable=flavor,
+            font=('Helvetica',20,'bold'),
+            width=15
+        )
+        flavor_entry_box.pack(ipady=7)
+
+        def add_flavor():
+            tkinter.messagebox.showinfo( "", "Se agrego el sabor del pastel")
+
+       
+        enter_button3= tk.Button(
+            self,
+            text='Enter',
+            command=add_flavor,
+            relief='raised',
+            borderwidth=3,
+            width=5,
+            height=2
+        )
+        enter_button3.pack(pady=10)
+
+         #Boton para volver atras
+        button = tk.Button(self, text="Atrás",
+                           command=lambda: controller.show_frame("AgregarProductos"))
         button.pack()
+
 
 class FinalizarCompra (tk.Frame):
 
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
+        tk.Frame.__init__(self, parent,bg='#DCD7C9')
         self.controller = controller
-        label = tk.Label(self, text="Ha finalizado la compra.\nPara proceder a realizar la factura, desea cargar los datos del cliente? ", font=controller.title_font)
-        label.pack(side="top", fill="x", pady=10)
+        option_label = tk.Label(self, 
+            text="Se ha finalizado la compra. \nPara proceder a realizar la factura, desea cargar los datos del cliente?", 
+            font=('Helvetica',20,'bold'),
+            bg='#DCD7C9',
+            foreground='#3F4E4F')
+        option_label.pack(pady=25)
+
+
         button1 = tk.Button(self, text="Si",
-                            command=lambda: controller.show_frame("PageOne"))
+                            command=lambda: controller.show_frame("CargarDatosFactura"))
         button1.pack()
         button2 = tk.Button(self, text="No",
-                            command=lambda: controller.show_frame("PageOne"))
+                            command=lambda: controller.show_frame("MostrarFactura"))
         button2.pack()
-        button = tk.Button(self, text="Volver al inicio",
-                           command=lambda: controller.show_frame("StartPage"))
-        button.pack()
-
-
-
-class PageOne(tk.Frame):
-
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        self.controller = controller
-        label = tk.Label(self, text="Agregar productos", font=controller.title_font)
-        label.pack(side="top", fill="x", pady=10)
-        button1 = tk.Button(self, text="1- Agregar productos",
-                            command=lambda: controller.show_frame("PageOne"))
-        button1.pack()
-        button = tk.Button(self, text="Volver al inicio",
-                           command=lambda: controller.show_frame("StartPage"))
-        button.pack()
-
-
-class PageTwo(tk.Frame):
+        # button = tk.Button(self, text="Volver al inicio",
+        #                    command=lambda: controller.show_frame("StartPage"))
+        # button.pack()
+    
+    
+class CargarDatosFactura (tk.Frame):
 
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
+        tk.Frame.__init__(self, parent,bg='#DCD7C9')
         self.controller = controller
-        label = tk.Label(self, text="This is page 2", font=controller.title_font)
-        label.pack(side="top", fill="x", pady=10)
+        option_label = tk.Label(self, 
+            text="Introduzca los datos del cliente.", 
+            font=('Helvetica',20,'bold'),
+            bg='#DCD7C9',
+            foreground='#3F4E4F')
+        option_label.pack(pady=25)
+
+
+       #Aca introducen los datos correspondientes
+
+       #Nombre y apellido
+        name_label = tk.Label(self, 
+            text="Introduzca el nombre y apellido:", 
+            font=('Helvetica',20,'bold'),
+            bg='#DCD7C9',
+            foreground='#A27B5C'
+        )
+        name_label.pack(pady=15)
 
         
+        name= tk.StringVar()
+        name_entry_box= tk.Entry(
+            self,
+            textvariable=name,
+            font=('Helvetica',20,'bold'),
+            width=15
+        )
+        name_entry_box.pack(ipady=7)
 
-        button = tk.Button(self, text="Volver al inicio",
-                           command=lambda: controller.show_frame("StartPage"))
+        def add_name():
+            tkinter.messagebox.showinfo( "", "Se agregó el nombre y apellido del cliente")
+
+       
+        enter_button3= tk.Button(
+            self,
+            text='Enter',
+            command=add_name,
+            relief='raised',
+            borderwidth=3,
+            width=5,
+            height=2
+        )
+        enter_button3.pack(pady=10)
+
+        #cedula de identidad o RUC
+        ruc_label = tk.Label(self, 
+            text="Introduzca el RUC o cedula de identidad:", 
+            font=('Helvetica',20,'bold'),
+            bg='#DCD7C9',
+            foreground='#A27B5C'
+        )
+        ruc_label.pack(pady=15)
+
+        
+        ruc= tk.StringVar()
+        ruc_entry_box= tk.Entry(
+            self,
+            textvariable=ruc,
+            font=('Helvetica',20,'bold'),
+            width=15
+        )
+        ruc_entry_box.pack(ipady=7)
+
+        def add_ruc():
+            tkinter.messagebox.showinfo( "", "Se agregó el RUC/CI del cliente")
+
+       
+        enter_button3= tk.Button(
+            self,
+            text='Enter',
+            command=add_ruc,
+            relief='raised',
+            borderwidth=3,
+            width=5,
+            height=2
+        )
+        enter_button3.pack(pady=10)
+
+        #direccion
+        adress_label = tk.Label(self, 
+            text="Introduzca la dirección/locación del cliente:", 
+            font=('Helvetica',20,'bold'),
+            bg='#DCD7C9',
+            foreground='#A27B5C'
+        )
+        adress_label.pack(pady=15)
+
+        
+        adress= tk.StringVar()
+        adress_entry_box= tk.Entry(
+            self,
+            textvariable=adress,
+            font=('Helvetica',20,'bold'),
+            width=15
+        )
+        adress_entry_box.pack(ipady=7)
+
+        def add_adress():
+            tkinter.messagebox.showinfo( "", "Se agregó la dirección del cliente")
+
+       
+        enter_button3= tk.Button(
+            self,
+            text='Enter',
+            command=add_adress,
+            relief='raised',
+            borderwidth=3,
+            width=5,
+            height=2
+        )
+        enter_button3.pack(pady=10)
+
+        button = tk.Button(self, text="Listo",
+                           command=lambda: controller.show_frame("MostrarFactura"))
         button.pack()
+
+   
+class MostrarFactura (tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent,bg='#DCD7C9')
+        self.controller = controller
+        option_label = tk.Label(self, 
+            text="Aca se muestra la factura", 
+            font=('Helvetica',20,'bold'),
+            bg='#DCD7C9',
+            foreground='#3F4E4F')
+        option_label.pack(pady=25)
+        boton_salir = tkinter.Button(self, text ="Salir", command = salir)
+        boton_salir.pack()
+
+
+        
+    
+    
+
+
 
 
 
