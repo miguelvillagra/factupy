@@ -1,13 +1,21 @@
+from cgitb import text
+from email.message import Message
+from logging import root
 import tkinter as tk                # python 3
-from tkinter import font  as tkfont # python 3
+from tkinter import LEFT, RIGHT, Label, font  as tkfont # python 3
 import tkinter.messagebox
+from tkinter.ttk import LabelFrame
 from turtle import heading
 from CompraControlador import *
 from nucleo import *
+
 #import Tkinter as tk     # python 2
 #import tkFont as tkfont  # python 2
-#controlador = CompraControlador()
+controlador = CompraControlador()
 #mi_lista = []
+
+lista_clientes= []
+
 
 
 class SampleApp(tk.Tk):
@@ -27,7 +35,7 @@ class SampleApp(tk.Tk):
 
         self.frames = {}
         for F in (StartPage, AgregarProductos, PastelGourmetGui, FinalizarCompraGui, PastelEconomicoGui, PastelHeladoGui, 
-        PastelEconomicoPequeñoGui, PastelEconomicoMedianoGui, CargarDatosFacturaGui, MostrarFacturaGui):
+        PastelEconomicoPequeñoGui, PastelEconomicoMedianoGui, CargarDatosFacturaGui, MostrarFacturaGui, NoCargarDatosFacturaGui):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -60,7 +68,7 @@ class StartPage(tk.Frame):
 
         controller.title('FactuPy')
         controller.state('zoomed')
-        controller.iconphoto(False, tk.PhotoImage(file='/Users/miguelvillagra/Desktop/proyecto/factupy/file.png'))
+        controller.iconphoto(False, tk.PhotoImage(file='file.png'))
 
         heading_label1= tk.Label(self, text='FactuPy', font=('Helvetica',45,'bold'), foreground='#2C3639', background='#DCD7C9')
         heading_label1.pack( pady=25)
@@ -147,23 +155,6 @@ class PastelGourmetGui (tk.Frame):
         )
         amount_entry_box.pack(ipady=7)
 
-        def add_amount():
-            tkinter.messagebox.showinfo( "", "Se agrego la cantidad de pasteles:" + str(amount.get()))
-            print(amount.get())
-        
-        enter_button1= tk.Button(
-            self,
-            text='Enter',
-            command=add_amount,
-            relief='raised',
-            borderwidth=3,
-            width=5,
-            height=2
-        )
-        enter_button1.pack(pady=10)
-
-
-
         #Aca introduce el precio
         price_label = tk.Label(self, 
             text="Introduzca el precio:", 
@@ -183,18 +174,6 @@ class PastelGourmetGui (tk.Frame):
         )
         price_entry_box.pack(ipady=7)
 
-        def add_price():
-            tkinter.messagebox.showinfo( "", "Se agrego el precio del pastel")
-        enter_button2= tk.Button(
-            self,
-            text='Enter',
-            command=add_price,
-            relief='raised',
-            borderwidth=3,
-            width=5,
-            height=2
-        )
-        enter_button2.pack(pady=10)
         
         #Aca introduce el sabor
         flavor_label = tk.Label(self, 
@@ -215,23 +194,6 @@ class PastelGourmetGui (tk.Frame):
         )
         flavor_entry_box.pack(ipady=7)
 
-        def add_flavor():
-            tkinter.messagebox.showinfo( "", "Se agrego el sabor del pastel")
-
-       
-        enter_button3= tk.Button(
-            self,
-            text='Enter',
-            command=add_flavor,
-            relief='raised',
-            borderwidth=3,
-            width=5,
-            height=2
-        )
-        enter_button3.pack(pady=10)
-
-
-        
 
         def funct1():
             if(price.get() != 0) & (amount.get() !=0):
@@ -249,20 +211,18 @@ class PastelGourmetGui (tk.Frame):
                   "Precio: " + str(pastel_gourmet.precio_gourmet) + "\n" +
                   "Sabor: " + str(pastel_gourmet.sabor_gourmet )+ "\n")
             else:
-                funct3()
+                funct2()
                 controller.show_frame("AgregarProductos")
 
 
-            
+        
 
         def funct2():
-            print("funciona 2")
 
-        def funct3():
-            print("Se agrego:" + str(amount.get()) +" pastel/es\n"+
-            "Precio: " + str(price.get())+" guaranies\n"+
-            "Sabor: " + str(flavor.get()) + str(type(flavor.get()))
-            )
+            # print("Se agrego:" + str(amount.get()) +" pastel/es\n"+
+            # "Precio: " + str(price.get())+" guaranies\n"+
+            # "Sabor: " + str(flavor.get()) + str(type(flavor.get()))
+            # )
 
             tkinter.messagebox.showinfo( "", "Se agrego:" + str(amount.get()) +" pastel/es\n"+
             "Precio: " + str(price.get())+" guaranies\n"+
@@ -273,13 +233,18 @@ class PastelGourmetGui (tk.Frame):
         listo_button= tk.Button(
             self,
             text='Listo',
-            command=lambda:[funct1(),funct2(),funct3(), controller.show_frame("AgregarProductos")],
+            command=lambda:[funct1(),funct2(), controller.show_frame("AgregarProductos")],
             relief='raised',
             borderwidth=3,
             width=5,
             height=2
         )
         listo_button.pack(pady=10)
+
+         #Boton para volver atras
+        button = tk.Button(self, text="Atrás",
+                           command=lambda: controller.show_frame("AgregarProductos"))
+        button.pack()
 
 class PastelEconomicoGui (tk.Frame):
 
@@ -334,22 +299,6 @@ class PastelEconomicoPequeñoGui (tk.Frame):
         )
         amount_entry_box.pack(ipady=7)
 
-        def add_amount():
-            tkinter.messagebox.showinfo( "", "Se agrego la cantidad de pasteles")
-        
-        enter_button1= tk.Button(
-            self,
-            text='Enter',
-            command=add_amount,
-            relief='raised',
-            borderwidth=3,
-            width=5,
-            height=2
-        )
-        enter_button1.pack(pady=10)
-
-
-
         #Aca introduce el precio
         price_label = tk.Label(self, 
             text="Introduzca el precio:", 
@@ -369,18 +318,6 @@ class PastelEconomicoPequeñoGui (tk.Frame):
         )
         price_entry_box.pack(ipady=7)
 
-        def add_price():
-            tkinter.messagebox.showinfo( "", "Se agrego el precio del pastel")
-        enter_button2= tk.Button(
-            self,
-            text='Enter',
-            command=add_price,
-            relief='raised',
-            borderwidth=3,
-            width=5,
-            height=2
-        )
-        enter_button2.pack(pady=10)
         
         #Aca introduce el sabor
         flavor_label = tk.Label(self, 
@@ -401,25 +338,62 @@ class PastelEconomicoPequeñoGui (tk.Frame):
         )
         flavor_entry_box.pack(ipady=7)
 
-        def add_flavor():
-            tkinter.messagebox.showinfo( "", "Se agrego el sabor del pastel")
 
-       
-        enter_button3= tk.Button(
+        def funct1():
+            if(price.get() != 0) & (amount.get() !=0):
+                pastel_economico_pequeno = PastelEconomico(
+                    PastelPequeño(flavor.get(), price.get()), amount.get())
+                mi_lista.append(pastel_economico_pequeno)
+
+                print("\nLa cantidad de pedidos en el carrito es de: " +
+                      str(len(mi_lista)))
+                print(
+                    "\nSe agrego un pastel al carrito con las siguientes caracteristicas: ")
+                print("Tipo de pastel: " +
+                      str(type(mi_lista[len(mi_lista)-1]).__name__))
+                print("Tamaño: Pastel Pequeño ")
+                print("Cantidad: " + str(pastel_economico_pequeno.cantidad_economico))
+                print(
+                    "Precio: " + str(pastel_economico_pequeno.tamanho_economico.precio_pequenho))
+                print("Sabor: " +
+                      pastel_economico_pequeno.tamanho_economico.sabor_pequenho + "\n")
+            else:
+                funct2()
+                controller.show_frame("AgregarProductos")
+
+
+        
+
+        def funct2():
+
+            # print("Se agrego:" + str(amount.get()) +" pastel/es\n"+
+            # "Precio: " + str(price.get())+" guaranies\n"+
+            # "Sabor: " + str(flavor.get()) + str(type(flavor.get()))
+            # )
+
+            tkinter.messagebox.showinfo( "", "Se agrego:" + str(amount.get()) +" pastel/es\n"+
+            "Precio: " + str(price.get())+" guaranies\n"+
+            "Sabor: " + str(flavor.get())
+            )
+
+
+        listo_button= tk.Button(
             self,
-            text='Enter',
-            command=add_flavor,
+            text='Listo',
+            command=lambda:[funct1(),funct2(), controller.show_frame("AgregarProductos")],
             relief='raised',
             borderwidth=3,
             width=5,
             height=2
         )
-        enter_button3.pack(pady=10)
+        listo_button.pack(pady=10)
 
          #Boton para volver atras
         button = tk.Button(self, text="Atrás",
-                           command=lambda: controller.show_frame("AgregarProductos"))
+                           command=lambda: controller.show_frame("PastelEconomicoGui"))
         button.pack()
+        
+        
 
 class PastelEconomicoMedianoGui (tk.Frame):
 
@@ -433,7 +407,7 @@ class PastelEconomicoMedianoGui (tk.Frame):
             foreground='#3F4E4F')
         option_label.pack(pady=25)
 
-        #Acá introduce la cantidad
+        ##Acá introduce la cantidad
         amount_label = tk.Label(self, 
             text="Introduzca la cantidad:", 
             font=('Helvetica',20,'bold'),
@@ -450,22 +424,6 @@ class PastelEconomicoMedianoGui (tk.Frame):
         )
         amount_entry_box.pack(ipady=7)
 
-        def add_amount():
-            tkinter.messagebox.showinfo( "", "Se agrego la cantidad de pasteles")
-        
-        enter_button1= tk.Button(
-            self,
-            text='Enter',
-            command=add_amount,
-            relief='raised',
-            borderwidth=3,
-            width=5,
-            height=2
-        )
-        enter_button1.pack(pady=10)
-
-
-
         #Aca introduce el precio
         price_label = tk.Label(self, 
             text="Introduzca el precio:", 
@@ -485,18 +443,6 @@ class PastelEconomicoMedianoGui (tk.Frame):
         )
         price_entry_box.pack(ipady=7)
 
-        def add_price():
-            tkinter.messagebox.showinfo( "", "Se agrego el precio del pastel")
-        enter_button2= tk.Button(
-            self,
-            text='Enter',
-            command=add_price,
-            relief='raised',
-            borderwidth=3,
-            width=5,
-            height=2
-        )
-        enter_button2.pack(pady=10)
         
         #Aca introduce el sabor
         flavor_label = tk.Label(self, 
@@ -517,25 +463,61 @@ class PastelEconomicoMedianoGui (tk.Frame):
         )
         flavor_entry_box.pack(ipady=7)
 
-        def add_flavor():
-            tkinter.messagebox.showinfo( "", "Se agrego el sabor del pastel")
 
-       
-        enter_button3= tk.Button(
+        def funct1():
+            if(price.get() != 0) & (amount.get() !=0):
+                pastel_economico_mediano = PastelEconomico(
+                    PastelMediano(flavor.get(), price.get()), amount.get())
+                mi_lista.append(pastel_economico_mediano)
+
+                print("\nLa cantidad de pedidos en el carrito es de: " +
+                      str(len(mi_lista)))
+                print(
+                    "\nSe agrego un pastel al carrito con las siguientes caracteristicas: ")
+                print("Tipo de pastel: " +
+                      str(type(mi_lista[len(mi_lista)-1]).__name__))
+                print("Tamaño: Pastel Mediano ")
+                print("Cantidad: " + str(pastel_economico_mediano.cantidad_economico))
+                print(
+                    "Precio: " + str(pastel_economico_mediano.tamanho_economico.precio_mediano))
+                print("Sabor: " +
+                      pastel_economico_mediano.tamanho_economico.sabor_mediano + "\n")
+            else:
+                funct2()
+                controller.show_frame("AgregarProductos")
+
+
+        
+
+        def funct2():
+
+            # print("Se agrego:" + str(amount.get()) +" pastel/es\n"+
+            # "Precio: " + str(price.get())+" guaranies\n"+
+            # "Sabor: " + str(flavor.get()) + str(type(flavor.get()))
+            # )
+
+            tkinter.messagebox.showinfo( "", "Se agrego:" + str(amount.get()) +" pastel/es\n"+
+            "Precio: " + str(price.get())+" guaranies\n"+
+            "Sabor: " + str(flavor.get())
+            )
+
+
+        listo_button= tk.Button(
             self,
-            text='Enter',
-            command=add_flavor,
+            text='Listo',
+            command=lambda:[funct1(),funct2(), controller.show_frame("AgregarProductos")],
             relief='raised',
             borderwidth=3,
             width=5,
             height=2
         )
-        enter_button3.pack(pady=10)
+        listo_button.pack(pady=10)
 
          #Boton para volver atras
         button = tk.Button(self, text="Atrás",
-                           command=lambda: controller.show_frame("AgregarProductos"))
+                           command=lambda: controller.show_frame("PastelEconomicoGui"))
         button.pack()
+        
 
         
 
@@ -551,7 +533,7 @@ class PastelHeladoGui (tk.Frame):
             foreground='#3F4E4F')
         option_label.pack(pady=25)
 
-        #Acá introduce la cantidad
+        ##Acá introduce la cantidad
         amount_label = tk.Label(self, 
             text="Introduzca la cantidad:", 
             font=('Helvetica',20,'bold'),
@@ -567,22 +549,6 @@ class PastelHeladoGui (tk.Frame):
             width=15
         )
         amount_entry_box.pack(ipady=7)
-
-        def add_amount():
-            tkinter.messagebox.showinfo( "", "Se agrego la cantidad de pasteles")
-        
-        enter_button1= tk.Button(
-            self,
-            text='Enter',
-            command=add_amount,
-            relief='raised',
-            borderwidth=3,
-            width=5,
-            height=2
-        )
-        enter_button1.pack(pady=10)
-
-
 
         #Aca introduce el precio
         price_label = tk.Label(self, 
@@ -603,18 +569,6 @@ class PastelHeladoGui (tk.Frame):
         )
         price_entry_box.pack(ipady=7)
 
-        def add_price():
-            tkinter.messagebox.showinfo( "", "Se agrego el precio del pastel")
-        enter_button2= tk.Button(
-            self,
-            text='Enter',
-            command=add_price,
-            relief='raised',
-            borderwidth=3,
-            width=5,
-            height=2
-        )
-        enter_button2.pack(pady=10)
         
         #Aca introduce el sabor
         flavor_label = tk.Label(self, 
@@ -635,25 +589,53 @@ class PastelHeladoGui (tk.Frame):
         )
         flavor_entry_box.pack(ipady=7)
 
-        def add_flavor():
-            tkinter.messagebox.showinfo( "", "Se agrego el sabor del pastel")
 
-       
-        enter_button3= tk.Button(
+        def funct1():
+            if(price.get() != 0) & (amount.get() !=0):
+                pastel_helado = PastelHelado(amount.get(), price.get(), flavor.get())
+                mi_lista.append(pastel_helado)
+
+                print("\nLa cantidad de pedidos en el carrito es de: " +
+                    str(len(mi_lista)))
+                print("Se agrego un pastel al carrito con las siguientes caracteristicas: ")
+                print("Tipo de pastel: " +
+                    str(type(mi_lista[len(mi_lista)-1]).__name__))
+                print("Cantidad: " + str(pastel_helado.cantidad_helado) + "\n" +
+                  "Precio: " + str(pastel_helado.precio_helado) + "\n" + 
+                  "Sabor: " + pastel_helado.sabor_helado + "\n")
+            else:
+                funct2()
+                controller.show_frame("AgregarProductos")
+
+        def funct2():
+
+            tkinter.messagebox.showinfo( "", "Se agrego:" + str(amount.get()) +" pastel/es\n"+
+            "Precio: " + str(price.get())+" guaranies\n"+
+            "Sabor: " + str(flavor.get())
+            )
+
+
+        listo_button= tk.Button(
             self,
-            text='Enter',
-            command=add_flavor,
+            text='Listo',
+            command=lambda:[funct1(),funct2(), controller.show_frame("AgregarProductos")],
             relief='raised',
             borderwidth=3,
             width=5,
             height=2
         )
-        enter_button3.pack(pady=10)
+        listo_button.pack(pady=10)
 
-         #Boton para volver atras
+        
+        #Boton para volver atras
         button = tk.Button(self, text="Atrás",
                            command=lambda: controller.show_frame("AgregarProductos"))
         button.pack()
+
+        
+
+        
+       
 
 
 class FinalizarCompraGui (tk.Frame):
@@ -673,12 +655,44 @@ class FinalizarCompraGui (tk.Frame):
                             command=lambda: controller.show_frame("CargarDatosFacturaGui"))
         button1.pack()
         button2 = tk.Button(self, text="No",
-                            command=lambda: controller.show_frame("MostrarFacturaGui"))
+                            command=lambda: controller.show_frame("NoCargarDatosFacturaGui"))
         button2.pack()
-        # button = tk.Button(self, text="Volver al inicio",
-        #                    command=lambda: controller.show_frame("StartPage"))
-        # button.pack()
+       
+       
+       #Boton para volver atras
+        button = tk.Button(self, text="Atrás",
+                           command=lambda: controller.show_frame("AgregarProductos"))
+        button.pack()
     
+class NoCargarDatosFacturaGui (tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent,bg='#DCD7C9')
+        self.controller = controller
+
+        
+
+        def funct1():
+            
+            cliente = Cliente(123456789, "Sin nombre", "Sin direccion")
+            lista_clientes.append(cliente)
+            controller.show_frame("MostrarFacturaGui")
+            controlador.relizar_factura(lista_clientes[-1])
+
+        listo_button= tk.Button(
+            self,
+            text='Mostrar factura',
+            command=lambda:[funct1()],
+            relief='raised',
+            borderwidth=3,
+            width=7,
+            height=2
+        )
+        listo_button.pack(pady=10)
+
+        boton_salir = tkinter.Button(self, text ="Salir", command = salir)
+        boton_salir.pack()
+        
     
 class CargarDatosFacturaGui (tk.Frame):
 
@@ -714,20 +728,6 @@ class CargarDatosFacturaGui (tk.Frame):
         )
         name_entry_box.pack(ipady=7)
 
-        def add_name():
-            tkinter.messagebox.showinfo( "", "Se agregó el nombre y apellido del cliente")
-
-       
-        enter_button3= tk.Button(
-            self,
-            text='Enter',
-            command=add_name,
-            relief='raised',
-            borderwidth=3,
-            width=5,
-            height=2
-        )
-        enter_button3.pack(pady=10)
 
         #cedula de identidad o RUC
         ruc_label = tk.Label(self, 
@@ -748,20 +748,7 @@ class CargarDatosFacturaGui (tk.Frame):
         )
         ruc_entry_box.pack(ipady=7)
 
-        def add_ruc():
-            tkinter.messagebox.showinfo( "", "Se agregó el RUC/CI del cliente")
-
-       
-        enter_button3= tk.Button(
-            self,
-            text='Enter',
-            command=add_ruc,
-            relief='raised',
-            borderwidth=3,
-            width=5,
-            height=2
-        )
-        enter_button3.pack(pady=10)
+        
 
         #direccion
         adress_label = tk.Label(self, 
@@ -782,40 +769,126 @@ class CargarDatosFacturaGui (tk.Frame):
         )
         adress_entry_box.pack(ipady=7)
 
-        def add_adress():
-            tkinter.messagebox.showinfo( "", "Se agregó la dirección del cliente")
+        
 
-       
-        enter_button3= tk.Button(
+
+        def funct1():
+            if(name.get() != '') & (adress.get() !='') & (ruc.get() !=''):
+                cliente = Cliente(ruc.get(), name.get(),adress.get())
+                lista_clientes.append(cliente)
+
+                x= len(lista_clientes)-1
+                lista_clientes[-1].nombre
+
+                
+                # print("nombre del cliente: " + cliente.nombre)
+                # print("direccion del cliente: " + cliente.direccion)
+                # print("ruc del cliente: " + cliente.cedula)
+
+                #despues nos muestra la facturqa
+                controller.show_frame("MostrarFacturaGui")
+                controlador.relizar_factura(lista_clientes[-1])
+                     
+
+            else:
+                pass
+                #funct2()
+                tkinter.messagebox.showinfo( "", "No puedes dejar campos vacios")
+                
+
+        def funct2():
+            pass
+            # tkinter.messagebox.showinfo( "", "Se agrego:" + str(amount.get()) +" pastel/es\n"+
+            # "Precio: " + str(price.get())+" guaranies\n"+
+            # "Sabor: " + str(flavor.get())
+            # )
+
+        
+
+        listo_button= tk.Button(
             self,
-            text='Enter',
-            command=add_adress,
+            text='Listo',
+            command=lambda:[funct1(),funct2()],
             relief='raised',
             borderwidth=3,
             width=5,
             height=2
         )
-        enter_button3.pack(pady=10)
+        listo_button.pack(pady=10)
 
-        button = tk.Button(self, text="Listo",
-                           command=lambda: controller.show_frame("MostrarFacturaGui"))
+        
+        #Boton para volver atras
+        button = tk.Button(self, text="Atrás",
+                           command=lambda: controller.show_frame("AgregarProductos"))
         button.pack()
 
-   
+
+
+
 class MostrarFacturaGui (tk.Frame):
+    # root = tk.Tk()
 
     def __init__(self, parent, controller):
+        
         tk.Frame.__init__(self, parent,bg='#DCD7C9')
         self.controller = controller
+       
+        
         option_label = tk.Label(self, 
             text="Aca se muestra la factura", 
             font=('Helvetica',20,'bold'),
             bg='#DCD7C9',
             foreground='#3F4E4F')
         option_label.pack(pady=25)
+    
+        
+
+        frame= LabelFrame(self, text="FACTURA LEGAL")
+        frame.pack(pady=20)
+
+        mensaje= Label(frame, 
+            text =( '''
+                                -------Ceci gross pastelería-------
+
+                                -------Mcal Lopez/José Vinuales-------
+
+               
+               
+                CANTIDAD------PRODUCTO/SABOR-------PRECIO------- IVA 10%------- SUBTOTAL 
+
+
+                DESCUENTO: 
+                IVA 10%:
+                TOTAL:  guaranies
+               
+               
+                Localidad: Sucursal Asuncion
+               
+                Cliente:
+                RUC: 
+                Dirección: 
+               '''
+            ), 
+           
+            font=('Helvetica',18),
+            # aspect=200,
+            justify=LEFT
+        )
+        mensaje.pack(pady=10, padx=10)
+
+        
+            
+        
+
         boton_salir = tkinter.Button(self, text ="Salir", command = salir)
         boton_salir.pack()
+        
+        
+        
+ 
 
+
+   
 
         
     
