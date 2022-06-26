@@ -9,10 +9,9 @@ from turtle import heading
 from CompraControlador import *
 from nucleo import *
 
-#import Tkinter as tk     # python 2
-#import tkFont as tkfont  # python 2
+
+
 controlador = CompraControlador()
-#mi_lista = []
 
 lista_clientes= []
 
@@ -711,7 +710,7 @@ class CargarDatosFacturaGui (tk.Frame):
 
        #Nombre y apellido
         name_label = tk.Label(self, 
-            text="Introduzca el nombre y apellido:", 
+            text="Nombre y apellido:", 
             font=('Helvetica',20,'bold'),
             bg='#DCD7C9',
             foreground='#A27B5C'
@@ -731,7 +730,7 @@ class CargarDatosFacturaGui (tk.Frame):
 
         #cedula de identidad o RUC
         ruc_label = tk.Label(self, 
-            text="Introduzca el RUC o cedula de identidad:", 
+            text="RUC o cedula de identidad:", 
             font=('Helvetica',20,'bold'),
             bg='#DCD7C9',
             foreground='#A27B5C'
@@ -752,7 +751,7 @@ class CargarDatosFacturaGui (tk.Frame):
 
         #direccion
         adress_label = tk.Label(self, 
-            text="Introduzca la dirección/locación del cliente:", 
+            text="Dirección:", 
             font=('Helvetica',20,'bold'),
             bg='#DCD7C9',
             foreground='#A27B5C'
