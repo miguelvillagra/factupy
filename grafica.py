@@ -7,7 +7,7 @@ from nucleo import *
 #import Tkinter as tk     # python 2
 #import tkFont as tkfont  # python 2
 #controlador = CompraControlador()
-
+#mi_lista = []
 
 
 class SampleApp(tk.Tk):
@@ -19,9 +19,6 @@ class SampleApp(tk.Tk):
         self.subtitle_font = tkfont.Font(family='Helvetica', size=12, weight="bold", slant="italic")
 
 
-        # the container is where we'll stack a bunch of frames
-        # on top of each other, then the one we want visible
-        # will be raised above the others
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand=True)
         container.grid_rowconfigure(0, weight=1)
@@ -29,15 +26,12 @@ class SampleApp(tk.Tk):
 
 
         self.frames = {}
-        for F in (StartPage, AgregarProductos, PastelGourmet, FinalizarCompra, PastelEconomico, PastelHelado, 
-        PastelEconomicoPequeño, PastelEconomicoMediano, CargarDatosFactura, MostrarFactura):
+        for F in (StartPage, AgregarProductos, PastelGourmetGui, FinalizarCompraGui, PastelEconomicoGui, PastelHeladoGui, 
+        PastelEconomicoPequeñoGui, PastelEconomicoMedianoGui, CargarDatosFacturaGui, MostrarFacturaGui):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
 
-            # put all of the pages in the same location;
-            # the one on the top of the stacking order
-            # will be the one that is visible.
             frame.grid(row=0, column=0, sticky="nsew")
 
         self.show_frame("StartPage")
@@ -108,23 +102,23 @@ class AgregarProductos(tk.Frame):
         
 
         button1 = tk.Button(self, text="Pastel Gourmet",
-                           command=lambda: controller.show_frame("PastelGourmet"))
+                           command=lambda: controller.show_frame("PastelGourmetGui"))
         button1.pack()
         button2 = tk.Button(self, text="Pastel Economico",
-                           command=lambda: controller.show_frame("PastelEconomico"))
+                           command=lambda: controller.show_frame("PastelEconomicoGui"))
         button2.pack()
         button3 = tk.Button(self, text="Pastel Helado",
-                           command=lambda: controller.show_frame("PastelHelado"))
+                           command=lambda: controller.show_frame("PastelHeladoGui"))
         button3.pack()
         button4 = tk.Button(self, text="Finalizar compra",
-                           command=lambda: controller.show_frame("FinalizarCompra"))
+                           command=lambda: controller.show_frame("FinalizarCompraGui"))
         button4.pack()
 
         button5 = tk.Button(self, text="Volver al inicio",
                            command=lambda: controller.show_frame("StartPage"))
         button5.pack()
 
-class PastelGourmet (tk.Frame):
+class PastelGourmetGui (tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent,bg='#DCD7C9')
@@ -154,7 +148,8 @@ class PastelGourmet (tk.Frame):
         amount_entry_box.pack(ipady=7)
 
         def add_amount():
-            tkinter.messagebox.showinfo( "", "Se agrego la cantidad de pasteles")
+            tkinter.messagebox.showinfo( "", "Se agrego la cantidad de pasteles:" + str(amount.get()))
+            print(amount.get())
         
         enter_button1= tk.Button(
             self,
@@ -236,12 +231,57 @@ class PastelGourmet (tk.Frame):
         enter_button3.pack(pady=10)
 
 
-        #Boton para volver atras
-        button = tk.Button(self, text="Atrás",
-                           command=lambda: controller.show_frame("AgregarProductos"))
-        button.pack()
+        
 
-class PastelEconomico (tk.Frame):
+        def funct1():
+            if(price.get() != 0) & (amount.get() !=0):
+                pastel_gourmet = PastelGourmet(amount.get(),price.get(),flavor.get())
+                mi_lista.append(pastel_gourmet)
+                
+                print()
+                ##Para ir verificando a la par en la terminal
+                print("\nLa cantidad de pedidos en el carrito es de: " +
+                  str(len(mi_lista)))
+                print("Se agrego un pastel al carrito con las siguientes caracteristicas: ")
+                print("Tipo de pastel: " +
+                  str(type(mi_lista[len(mi_lista)-1]).__name__))
+                print("Cantidad: " + str(pastel_gourmet.cantidad_gourmet) + "\n" +
+                  "Precio: " + str(pastel_gourmet.precio_gourmet) + "\n" +
+                  "Sabor: " + str(pastel_gourmet.sabor_gourmet )+ "\n")
+            else:
+                funct3()
+                controller.show_frame("AgregarProductos")
+
+
+            
+
+        def funct2():
+            print("funciona 2")
+
+        def funct3():
+            print("Se agrego:" + str(amount.get()) +" pastel/es\n"+
+            "Precio: " + str(price.get())+" guaranies\n"+
+            "Sabor: " + str(flavor.get()) + str(type(flavor.get()))
+            )
+
+            tkinter.messagebox.showinfo( "", "Se agrego:" + str(amount.get()) +" pastel/es\n"+
+            "Precio: " + str(price.get())+" guaranies\n"+
+            "Sabor: " + str(flavor.get())
+            )
+
+
+        listo_button= tk.Button(
+            self,
+            text='Listo',
+            command=lambda:[funct1(),funct2(),funct3(), controller.show_frame("AgregarProductos")],
+            relief='raised',
+            borderwidth=3,
+            width=5,
+            height=2
+        )
+        listo_button.pack(pady=10)
+
+class PastelEconomicoGui (tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent, bg='#DCD7C9')
@@ -254,10 +294,10 @@ class PastelEconomico (tk.Frame):
         option_label.pack(pady=25)
 
         button1 = tk.Button(self, text="Pequeño",
-                           command=lambda: controller.show_frame("PastelEconomicoPequeño"))
+                           command=lambda: controller.show_frame("PastelEconomicoPequeñoGui"))
         button1.pack()
         button2 = tk.Button(self, text="Mediano",
-                           command=lambda: controller.show_frame("PastelEconomicoMediano"))
+                           command=lambda: controller.show_frame("PastelEconomicoMedianoGui"))
         button2.pack()
 
          #Boton para volver atras
@@ -265,7 +305,7 @@ class PastelEconomico (tk.Frame):
                            command=lambda: controller.show_frame("AgregarProductos"))
         button.pack()
 
-class PastelEconomicoPequeño (tk.Frame):
+class PastelEconomicoPequeñoGui (tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent, bg='#DCD7C9')
@@ -381,7 +421,7 @@ class PastelEconomicoPequeño (tk.Frame):
                            command=lambda: controller.show_frame("AgregarProductos"))
         button.pack()
 
-class PastelEconomicoMediano (tk.Frame):
+class PastelEconomicoMedianoGui (tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent, bg='#DCD7C9')
@@ -499,7 +539,7 @@ class PastelEconomicoMediano (tk.Frame):
 
         
 
-class PastelHelado (tk.Frame):
+class PastelHeladoGui (tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent,bg='#DCD7C9')
@@ -616,7 +656,7 @@ class PastelHelado (tk.Frame):
         button.pack()
 
 
-class FinalizarCompra (tk.Frame):
+class FinalizarCompraGui (tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent,bg='#DCD7C9')
@@ -630,17 +670,17 @@ class FinalizarCompra (tk.Frame):
 
 
         button1 = tk.Button(self, text="Si",
-                            command=lambda: controller.show_frame("CargarDatosFactura"))
+                            command=lambda: controller.show_frame("CargarDatosFacturaGui"))
         button1.pack()
         button2 = tk.Button(self, text="No",
-                            command=lambda: controller.show_frame("MostrarFactura"))
+                            command=lambda: controller.show_frame("MostrarFacturaGui"))
         button2.pack()
         # button = tk.Button(self, text="Volver al inicio",
         #                    command=lambda: controller.show_frame("StartPage"))
         # button.pack()
     
     
-class CargarDatosFactura (tk.Frame):
+class CargarDatosFacturaGui (tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent,bg='#DCD7C9')
@@ -758,11 +798,11 @@ class CargarDatosFactura (tk.Frame):
         enter_button3.pack(pady=10)
 
         button = tk.Button(self, text="Listo",
-                           command=lambda: controller.show_frame("MostrarFactura"))
+                           command=lambda: controller.show_frame("MostrarFacturaGui"))
         button.pack()
 
    
-class MostrarFactura (tk.Frame):
+class MostrarFacturaGui (tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent,bg='#DCD7C9')
