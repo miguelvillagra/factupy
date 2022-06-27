@@ -1,9 +1,12 @@
 
 
 
-Para ejecutar el programa, es necesario tener python3.
+Para proceder es necesario tener instalado python3.
 
-Luego hay que dirigirse donde se encuentre el archivo appMiguel.py desde la consola
+Para ejecutar la interfaz de caracteres:
+Dirigirse donde se encuentre el archivo appMiguel.py desde la consola
+e introducir el siguiente comando: python3 appMiguel.py
 
-e introducir el siguiente comando: Python3 appMiguel.py
-123
+Para ejecutar el programa con interfaz grafica:
+Dirigirse donde se encuentre el archivo grafica.py desde la consola
+e introducir el siguiente comando: python3 grafica.py
