@@ -1,12 +1,15 @@
-
-
-
-Para proceder es necesario tener instalado python3.
+Para proceder es necesario tener instalado python3, el interprete prolog.
 
 Para ejecutar la interfaz de caracteres:
-Dirigirse donde se encuentre el archivo appMiguel.py desde la consola
+Diríjase donde se encuentre el archivo appMiguel.py desde la consola
 e introducir el siguiente comando: python3 appMiguel.py
 
 Para ejecutar el programa con interfaz grafica:
-Dirigirse donde se encuentre el archivo grafica.py desde la consola
+Diríjase donde se encuentre el archivo grafica.py desde la consola
 e introducir el siguiente comando: python3 grafica.py
+
+Para ejecutar el script Prolog:
+Diríjase donde se encuentre la carpeta "prolog" y desde el interprete de prolog 
+ejecute el script prolog.pl
+
+hola1223
