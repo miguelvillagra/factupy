@@ -3,16 +3,20 @@
 from InterfazPasteleria import InterfazPasteleria
 from nucleo import *
 import math
+from RegistroClientes import *
 
 ####################################OBS#########################################
 # Para que todas las opciones de agregar productos funcionen                    #
 # es necesario que se ingresen los datos en el orden que salga en pantalla      #
 #################################################################################
 
-#agregar el ZODB y tkinter
+x= RegistroClientes()
+
 mi_lista = []  # array en donde guardamos los pedidos a realizar
 empresa = EmpresaGastronómica(
     "Ceci gross pastelería", "Mcal Lopez/José Vinuales")
+
+
 
 
 class CompraControlador(object):
@@ -115,7 +119,7 @@ class CompraControlador(object):
             print("Se ha finalizado la compra \n")
 
             s_n = input(
-                "Para proceder a realizar la factura, desea cargar los datos del cliente? \n S o N")
+                "Para proceder a realizar la factura, desea cargar los datos del cliente? \n S o N\n")
             if s_n.lower() == "s":
                 # llama a una funcion que cargua al cliente con sus productos y sus datos tributarios
                 clientedatos = self.carga_datos_cliente(s_n)
@@ -133,12 +137,19 @@ class CompraControlador(object):
             quit()
 
     def menu_principal(self):
+        
         #Aca inicia el programa y luego va a agregar_nuevo_producto si el usuario seleciona la opcion de 1- Agregar productos
         choice = input(
-            " Introduzca una opcion \n 1- Agregar productos \n 2- Salir \n")
+            " Introduzca una opcion \n 1- Agregar productos \n 2- Mostrar clientes registrados  \n 3- Salir \n")
 
-        while choice == "1":
-            self.agregar_nuevo_producto()
+        while choice == "1" or choice == "2":
+            
+            if choice =="1":
+                self.agregar_nuevo_producto()
+            else:
+                x.mostrar()
+                choice = "1"
+               
         else:
             print("\nGracias por usar FactuPy\n")
 
@@ -151,6 +162,14 @@ class CompraControlador(object):
             print(
                 "Introduzca los datos del cliente. \n Cedula, nombre y apellido, dirección. En ese orden")
             cliente = Cliente(input(), input(), input())
+            s_n=input("Desea guardar al cliente en la base de datos?\n S o N\n")
+            if s_n.lower() == "s":
+                print("se guardo los datos del cliente")
+                x.carga(cliente)
+                x.mostrar()
+
+            else:
+                print("NO se guardo los datos del cliente")
             return cliente
 
         else:  # Se cargar los datos de forma anonima si el usuario selecciona otra opcion distinta de "s"
