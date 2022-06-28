@@ -10,6 +10,9 @@ from RegistroClientes import *
 # es necesario que se ingresen los datos en el orden que salga en pantalla      #
 #################################################################################
 
+#Se puede registrar clientes al momento de realizar la factura, faltaría implementar una opcion
+#para poder borrar clientes de listaclientes.pickle
+
 x= RegistroClientes()
 
 mi_lista = []  # array en donde guardamos los pedidos a realizar
@@ -123,13 +126,13 @@ class CompraControlador(object):
             if s_n.lower() == "s":
                 # llama a una funcion que cargua al cliente con sus productos y sus datos tributarios
                 clientedatos = self.carga_datos_cliente(s_n)
-                self.relizar_factura(clientedatos)
+                print(self.relizar_factura(clientedatos))
 
                 quit()
             else:
 
                 # llama a una funcion que imprime la factura con los datos anonimos y termina el programa
-                self.relizar_factura(self.carga_datos_cliente(s_n))
+                print(self.relizar_factura(self.carga_datos_cliente(s_n)))
                 quit()
 
         elif producto == "5":
@@ -187,12 +190,12 @@ class CompraControlador(object):
 
         #Datos de la empresa gastronomica que seran mostrados al principio de la factura
         print("\n\n\n")
-        print("-------" + empresa.nombre + "-------\n")
-        print("-------" + empresa.dirección + "-------\n")
-        print("\nFACTURA NRO: " + factura.numero)
-
-        print("CANTIDAD------PRODUCTO/SABOR-------PRECIO------- IVA 10%------- SUBTOTAL ")
-
+        prueba50= "\n-------" + empresa.nombre + "-------\n" + "\n-------" + empresa.dirección + "-------\n" +"\nFACTURA NRO: " + factura.numero +'\n' +"\nCANTIDAD------PRODUCTO/SABOR-------PRECIO------- IVA 10%------- SUBTOTAL \n"
+        #print("\n-------" + empresa.nombre + "-------\n")
+        #print("\n-------" + empresa.dirección + "-------\n")
+        #print("\nFACTURA NRO: " + factura.numero +'\n')
+        # print("\nCANTIDAD------PRODUCTO/SABOR-------PRECIO------- IVA 10%------- SUBTOTAL \n")
+        #print(prueba50)
         for x in range(len(mi_lista)):
 
             if str(type(mi_lista[x]).__name__) == "PastelGourmet":
@@ -202,11 +205,11 @@ class CompraControlador(object):
                     int(mi_lista[x].precio_gourmet)
                 total += subtotal
 
-                print(str(mi_lista[x].cantidad_gourmet) + "---Pastel Gourmet/" + str(mi_lista[x].sabor_gourmet) +
+                prueba50= prueba50 +(str(mi_lista[x].cantidad_gourmet) + "---Pastel Gourmet/" + str(mi_lista[x].sabor_gourmet) +
                       "---" + str(mi_lista[x].precio_gourmet) +
                       "---" + str(math.floor(calculo_iva)) +
-                      "---" + str(subtotal))
-
+                      "---" + str(subtotal)+ '\n')
+                
             elif str(type(mi_lista[x]).__name__) == "PastelHelado":
 
                 calculo_iva = int(mi_lista[x].precio_helado)/iva
@@ -214,10 +217,10 @@ class CompraControlador(object):
                     int(mi_lista[x].precio_helado)
                 total += subtotal
 
-                print(str(mi_lista[x].cantidad_helado) + "---Pastel Helado/" + str(mi_lista[x].sabor_helado) +
+                prueba50= prueba50 +(str(mi_lista[x].cantidad_helado) + "---Pastel Helado/" + str(mi_lista[x].sabor_helado) +
                       "---" + str(mi_lista[x].precio_helado) +
                       "---" + str(math.floor(calculo_iva)) +
-                      "---" + str(subtotal))
+                      "---" + str(subtotal)+ '\n')
 
             elif str(type(mi_lista[x]).__name__) == "PastelEconomico":
 
@@ -229,10 +232,10 @@ class CompraControlador(object):
                         int(mi_lista[x].tamanho_economico.precio_pequenho)
                     total += subtotal
 
-                    print(str(mi_lista[x].cantidad_economico) + "---Pastel Economico Pequeño/" + str(mi_lista[x].tamanho_economico.sabor_pequenho) +
+                    prueba50= prueba50 +(str(mi_lista[x].cantidad_economico) + "---Pastel Economico Pequeño/" + str(mi_lista[x].tamanho_economico.sabor_pequenho) +
                           "---" + str(mi_lista[x].tamanho_economico.precio_pequenho) +
                           "---" + str(math.floor(calculo_iva)) +
-                          "---" + str(subtotal))
+                          "---" + str(subtotal) + '\n')
 
                 else:
                     calculo_iva = int(
@@ -241,12 +244,13 @@ class CompraControlador(object):
                         int(mi_lista[x].tamanho_economico.precio_mediano)
                     total += subtotal
 
-                    print(str(mi_lista[x].cantidad_economico) + "---Pastel Economico Mediano/" + str(mi_lista[x].tamanho_economico.sabor_mediano) +
+                    prueba50= prueba50 +(str(mi_lista[x].cantidad_economico) + "---Pastel Economico Mediano/" + str(mi_lista[x].tamanho_economico.sabor_mediano) +
                           "---" + str(mi_lista[x].tamanho_economico.precio_mediano) +
                           "---" + str(math.floor(calculo_iva)) +
-                          "---" + str(subtotal))
+                          "---" + str(subtotal)+ '\n' )
         #Aca se muestra el total a pagar y datos del cliente que fueron cargados en carga_datos_cliente1
-        print("\nDESCUENTO: \n" + "IVA 10%: " +
+        prueba50= prueba50 +("\nDESCUENTO: \n" + "IVA 10%: " +
               str(math.floor(total/iva)) + "\nTOTAL: " + str(total) + " guaranies")
-        print("\nLocalidad: Sucursal Asuncion\n" + "Cliente: " + clien.nombre + "\n" +
+        prueba50= prueba50 +("\nLocalidad: Sucursal Asuncion\n" + "\n\nCliente: " + clien.nombre + "\n" +
               "RUC: " + str(clien.cedula) + "\n" + "Dirección: " + clien.direccion + "\n")
+        return prueba50
