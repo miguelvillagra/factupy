@@ -147,7 +147,8 @@ class CompraControlador(object):
             if choice =="1":
                 self.agregar_nuevo_producto()
             else:
-                x.mostrar()
+                
+                print(x.mostrar())
                 choice = "1"
                
         else:
