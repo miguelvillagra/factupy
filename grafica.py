@@ -11,6 +11,14 @@ from nucleo import *
 from RegistroClientes import *
 
 
+
+##La clase MostrarFacturaGui no esta aun terminada, mientras tanto se muestra una factura vacia
+##pero debería mostrar lo mismo que en la terminal.
+
+##La opcion de agregar clientes a listaclientes.pickle solo se encuentra disponible en la interfaz caracteres
+#(se podria implementar ReguistrarClientesGui) pero es posible observarlos gracias a la clase  ClientesRegistradosGui,
+
+
 controlador = CompraControlador()
 
 lista_clientes= []
@@ -707,8 +715,9 @@ class NoCargarDatosFacturaGui (tk.Frame):
             
             cliente = Cliente(123456789, "Sin nombre", "Sin direccion")
             lista_clientes.append(cliente)
+            print(controlador.relizar_factura(lista_clientes[-1]))
             controller.show_frame("MostrarFacturaGui")
-            controlador.relizar_factura(lista_clientes[-1])
+            
 
         listo_button= tk.Button(
             self,
@@ -716,7 +725,7 @@ class NoCargarDatosFacturaGui (tk.Frame):
             command=lambda:[funct1()],
             relief='raised',
             borderwidth=3,
-            width=7,
+            width=15,
             height=2
         )
         listo_button.pack(pady=10)
@@ -818,7 +827,7 @@ class CargarDatosFacturaGui (tk.Frame):
 
                 #despues nos muestra la facturqa
                 controller.show_frame("MostrarFacturaGui")
-                controlador.relizar_factura(lista_clientes[-1])
+                print(controlador.relizar_factura(lista_clientes[-1]))
                      
 
             else:
