@@ -8,13 +8,13 @@ from tkinter.ttk import LabelFrame
 from turtle import heading
 from CompraControlador import *
 from nucleo import *
-
+from RegistroClientes import *
 
 
 controlador = CompraControlador()
 
 lista_clientes= []
-
+r= RegistroClientes()
 
 
 class SampleApp(tk.Tk):
@@ -34,7 +34,7 @@ class SampleApp(tk.Tk):
 
         self.frames = {}
         for F in (StartPage, AgregarProductos, PastelGourmetGui, FinalizarCompraGui, PastelEconomicoGui, PastelHeladoGui, 
-        PastelEconomicoPequeñoGui, PastelEconomicoMedianoGui, CargarDatosFacturaGui, MostrarFacturaGui, NoCargarDatosFacturaGui):
+        PastelEconomicoPequeñoGui, PastelEconomicoMedianoGui, CargarDatosFacturaGui, MostrarFacturaGui, NoCargarDatosFacturaGui, ClientesRegistradosGui):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -66,7 +66,7 @@ class StartPage(tk.Frame):
         self.controller = controller
 
         controller.title('FactuPy')
-        controller.state('zoomed')
+        #controller.state('zoomed')
         controller.iconphoto(False, tk.PhotoImage(file='file.png'))
 
         heading_label1= tk.Label(self, text='FactuPy', font=('Helvetica',45,'bold'), foreground='#2C3639', background='#DCD7C9')
@@ -82,16 +82,48 @@ class StartPage(tk.Frame):
             foreground='#3F4E4F')
         welcome_label.pack(pady=15)
 
-       
 
         button1 = tk.Button(self, text="Agregar productos",
                             command=lambda: controller.show_frame("AgregarProductos"))
+        button1.pack()
+
+        button1 = tk.Button(self, text="Mostrar Clientes registrados",
+                            command=lambda: controller.show_frame("ClientesRegistradosGui"))
         button1.pack()
         
         boton_salir = tkinter.Button(self, text ="Salir", command = salir)
         boton_salir.pack()
 
-        
+class ClientesRegistradosGui(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent, background='#DCD7C9')
+        self.controller = controller
+
+        option_label = tk.Label(self, 
+            text="Clientes registrados", 
+            font=('Helvetica',20,'bold'),
+            bg='#DCD7C9',
+            foreground='#3F4E4F')
+        option_label.pack(pady=25)
+
+        print(r.mostrar())
+
+        frame= LabelFrame(self, text="CLIENTES REGISTRADOS")
+        frame.pack(pady=20)
+
+        mensaje= Label(frame, 
+            text =r.mostrar(), 
+           
+            font=('Helvetica',18),
+            # aspect=200,
+            justify=LEFT
+        )
+        mensaje.pack(pady=10, padx=10)
+
+
+        boton_salir = tkinter.Button(self, text ="Atras", command=lambda: controller.show_frame("StartPage"))
+        boton_salir.pack()       
 
 class AgregarProductos(tk.Frame):
 
