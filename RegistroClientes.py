@@ -35,12 +35,7 @@ class RegistroClientes(object):
         pickle_in = open('listaclientes.pickle', 'rb')
         array2 = pickle.load(pickle_in)
 
-        print(" \n********Clientes registrados:********\n")
+        prueba= '********Clientes registrados:********\n'
         for x in range(len(array2)):
-            print("Cliente"+str(x+1)+ ": " + array2[x].nombre + "\n" +
-              "RUC: " + str(array2[x].cedula) + "\n" + "Dirección: " + array2[x].direccion + "\n")
-
-
-# x= RegistroClientes
-# x.mostrar()        
-
+            prueba ='\n'+ prueba +'\n'+ "Cliente"+str(x+1)+ ": " + array2[x].nombre + "\n" +  "RUC: " + str(array2[x].cedula) + "\n" + "Dirección: " + array2[x].direccion + "\n" 
+        return prueba
