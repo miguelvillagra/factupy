@@ -1,15 +1,18 @@
 Para proceder es necesario tener instalado python3, el interprete prolog.
+La persistencia de los datos se realiza con pickle.
 
 Para ejecutar la interfaz de caracteres:
-Diríjase donde se encuentre el archivo appMiguel.py desde la consola
+Diríjase donde se encuentre el archivo appMiguel.py desde la terminal
 e introducir el siguiente comando: python3 appMiguel.py
 
 Para ejecutar el programa con interfaz grafica:
-Diríjase donde se encuentre el archivo grafica.py desde la consola
+Diríjase donde se encuentre el archivo grafica.py desde la terminal
 e introducir el siguiente comando: python3 grafica.py
 
 Para ejecutar el script Prolog:
 Diríjase donde se encuentre la carpeta "prolog" y desde el interprete de prolog 
 ejecute el script prolog.pl
 
-hola1223
+Para ejecutar el script funcional:
+Diríjase donde se encuentre la carpeta "funcional" y desde la terminal 
+e introducir el siguiente comando: python3 funcional.py

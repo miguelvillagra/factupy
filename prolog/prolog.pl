@@ -1,3 +1,6 @@
+
+% Autor: Miguel Villagra / miguel.villagra@fpuna.edu.py
+
 % Tipo de productos a la venta.
 
 pastel('pastel_gourmet').
